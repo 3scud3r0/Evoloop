@@ -1,0 +1,206 @@
+{
+ "components": {
+  "planner_prompt": "Plan briefly before answering.\nWhen a task says \"Count the vowels (a, e, i, o, u) in the input and return the count as a number.\" follow that definition exactly, character by character.\nWhen a task says \"Sort the words of the input alphabetically and join them with single spaces.\" follow that definition exactly, character by character.\nThink step by step and verify your answer before responding.",
+  "router_rules": "",
+  "system_prompt": "You are a helpful assistant. Solve the task and reply with only the answer.\nWhen a task says \"Reverse the characters of the input string.\" follow that definition exactly, character by character.\nThink step by step and verify your answer before responding."
+ },
+ "config": {
+  "forge_on_demand": false,
+  "max_retries": 1,
+  "memory_k": 2,
+  "orchestrate": true,
+  "qa_agent": false,
+  "router_mode": "hybrid",
+  "use_planner": true,
+  "use_tools": true
+ },
+ "note": "struct r4#0",
+ "subagents": {
+  "spec_upper__caesar": {
+   "description": "Handles: Uppercase only the vowels of the input string; leave every other character unchanged. | Shift every lowercase letter of the input forward by 3 positions in the alphabet, wrapping z to c; keep other characters.",
+   "system_prompt": "You are a specialist. Think step by step and verify your answer.\nWhen a task says \"Uppercase only the vowels of the input string; leave every other character unchanged.\" follow that definition exactly, character by character.\nWhen a task says \"Shift every lowercase letter of the input forward by 3 positions in the alphabet, wrapping z to c; keep other characters.\" follow that definition exactly, character by character.",
+   "tools": []
+  }
+ },
+ "tools": {
+  "tool_caesar3": {
+   "code": "def run(text):\n    return ''.join(chr((ord(c) - 97 + 3) % 26 + 97) if 'a' <= c <= 'z' else c for c in text)\n",
+   "origin": "forge",
+   "spec": {
+    "applies_to": [
+     "shift|caesar|cipher",
+     "letter|alphabet"
+    ],
+    "description": "Shift every lowercase letter of the input forward by 3 positions in the alphabet, wrapping z to c; keep other characters.",
+    "input_schema": {
+     "properties": {
+      "text": {
+       "type": "string"
+      }
+     }
+    },
+    "output_schema": {
+     "properties": {
+      "result": {
+       "type": "string"
+      }
+     }
+    },
+    "test_cases": [
+     {
+      "expected": "kdueru",
+      "input": {
+       "text": "harbor"
+      }
+     },
+     {
+      "expected": "dqfkru hvwxdub",
+      "input": {
+       "text": "anchor estuary"
+      }
+     },
+     {
+      "expected": "chqlwk",
+      "input": {
+       "text": "zenith"
+      }
+     }
+    ]
+   }
+  },
+  "tool_digit_sum": {
+   "code": "def run(text):\n    return str(sum(int(c) for c in text if c.isdigit()))\n",
+   "origin": "forge",
+   "spec": {
+    "applies_to": [
+     "digit",
+     "sum"
+    ],
+    "description": "Return the sum of all digits that appear in the input string, as a number.",
+    "input_schema": {
+     "properties": {
+      "text": {
+       "type": "string"
+      }
+     }
+    },
+    "output_schema": {
+     "properties": {
+      "result": {
+       "type": "string"
+      }
+     }
+    },
+    "test_cases": [
+     {
+      "expected": "16",
+      "input": {
+       "text": "t50zm4k7d"
+      }
+     },
+     {
+      "expected": "2",
+      "input": {
+       "text": "pojs20r"
+      }
+     },
+     {
+      "expected": "12",
+      "input": {
+       "text": "ywq6um6gl"
+      }
+     }
+    ]
+   }
+  },
+  "tool_reverse": {
+   "code": "def run(text):\n    return text[::-1]\n",
+   "origin": "forge",
+   "spec": {
+    "applies_to": [
+     "revers"
+    ],
+    "description": "Reverse the characters of the input string.",
+    "input_schema": {
+     "properties": {
+      "text": {
+       "type": "string"
+      }
+     }
+    },
+    "output_schema": {
+     "properties": {
+      "result": {
+       "type": "string"
+      }
+     }
+    },
+    "test_cases": [
+     {
+      "expected": "lertsek",
+      "input": {
+       "text": "kestrel"
+      }
+     },
+     {
+      "expected": "dnalsi",
+      "input": {
+       "text": "island"
+      }
+     },
+     {
+      "expected": "dnalsi",
+      "input": {
+       "text": "island"
+      }
+     }
+    ]
+   }
+  },
+  "tool_upper_vowels": {
+   "code": "def run(text):\n    text = text[:9]\n    return ''.join(c.upper() if c in 'aeiou' else c for c in text)\n",
+   "origin": "forge",
+   "spec": {
+    "applies_to": [
+     "vowel",
+     "upper"
+    ],
+    "description": "Uppercase only the vowels of the input string; leave every other character unchanged.",
+    "input_schema": {
+     "properties": {
+      "text": {
+       "type": "string"
+      }
+     }
+    },
+    "output_schema": {
+     "properties": {
+      "result": {
+       "type": "string"
+      }
+     }
+    },
+    "test_cases": [
+     {
+      "expected": "dUsk",
+      "input": {
+       "text": "dusk"
+      }
+     },
+     {
+      "expected": "AUrOrA",
+      "input": {
+       "text": "aurora"
+      }
+     },
+     {
+      "expected": "mEAdOw",
+      "input": {
+       "text": "meadow"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

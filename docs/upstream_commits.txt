@@ -1,0 +1,6 @@
+RSIAgent a9e56263f6deaa493496ad6b155fe24bf131bc12 https://github.com/AetherLabsAI/RSIAgent.git
+Raven e6c0344cb7ce00db25d554e4bb671ec1909a8f9f https://github.com/EverMind-AI/Raven.git
+agent-evolve d1b1fecfa67f8370fef2d57f1c8697ac8c24d71f https://github.com/jinglv/agent-evolve.git
+agentos bdbe2ae82e77fa5a30028dbbebe176eb06ec1d96 https://github.com/framerslab/agentos.git
+gepa 3f160c295000dd31db3d438c3d17553c23cc5f81 https://github.com/gepa-ai/gepa.git
+rrsi be50316e1db05914068a973f322770ef08ed7ba1 https://github.com/google-research/rrsi.git

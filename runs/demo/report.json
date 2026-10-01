@@ -1,0 +1,805 @@
+{
+ "config": {
+  "rounds": 8,
+  "n_train": 6,
+  "k": 3,
+  "n_conf": 8,
+  "k_conf": 3,
+  "gepa_budget": 160,
+  "z_min": 1.64,
+  "guard_drop": 0.25,
+  "cal_reps": 8,
+  "min_lift": 0.03,
+  "patience": 2,
+  "saturation_S": 0.97,
+  "seed": 1,
+  "chaos": false,
+  "use_gepa": true,
+  "use_structural": true,
+  "use_swarm": true,
+  "use_router": true,
+  "memory": "concept",
+  "vstore": "brute",
+  "sandbox": "auto",
+  "require_isolation": false,
+  "para_rate": 0.5,
+  "dilution": 0.06,
+  "out": "runs/demo",
+  "llm": "sim"
+ },
+ "rrsi": {
+  "T": 8,
+  "k": 3,
+  "m": 2,
+  "b_min": 1,
+  "b_max": 3,
+  "w": 2,
+  "m_draft": 1,
+  "delta": null,
+  "delta_z": 2.0,
+  "beta0": 0.1,
+  "beta1": 40.0,
+  "w_s": 100.0,
+  "w_c": 15.0,
+  "w_n": 0.5,
+  "n_prune": 4,
+  "repair_rounds": 5,
+  "invalid_missing_frac": 0.15,
+  "n_fail_traces": 22,
+  "n_success_traces": 6,
+  "eval_parallel": 1,
+  "proposer_model": "claude-opus-4-8",
+  "analyst_model": "claude-opus-4-8",
+  "critic_model": "claude-opus-4-8",
+  "notes": {}
+ },
+ "champion_version": 6,
+ "promotions": [
+  "gepa-r0",
+  "struct-r1#1",
+  "struct-r2#0",
+  "struct-r4#0"
+ ],
+ "rounds": [
+  {
+   "round": 0,
+   "champion_v": 1,
+   "champion_S": 0.3889,
+   "champion_families": {
+    "caesar3": 0.222,
+    "count_vowels": 0.5,
+    "digit_sum": 0.5,
+    "reverse": 0.333,
+    "sort_words": 0.444,
+    "upper_vowels": 0.333
+   },
+   "delta": 0.2363,
+   "S_star": 0.3889,
+   "stalled": false,
+   "candidates": [
+    {
+     "variant": "gepa-r0",
+     "source": "gepa",
+     "components": [
+      "prompt"
+     ],
+     "S": 0.6759,
+     "dS": 0.287,
+     "dC": 1.484,
+     "admissible": true,
+     "reason": "admissible: gain +0.2870 > delta 0.2363; cost change +1.484 <= budget 11.581 (beta0 0.1 + beta1 40.0 * dS)"
+    },
+    {
+     "variant": "struct-r0#0",
+     "source": "structural",
+     "components": [
+      "subagent",
+      "client_tool",
+      "client_tool"
+     ],
+     "S": 0.4167,
+     "dS": 0.0278,
+     "dC": 1.195,
+     "admissible": false,
+     "reason": "cost rule failed: gain +0.0278 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -14.1409 <= 0 (nu=2)"
+    },
+    {
+     "variant": "struct-r0#1",
+     "source": "structural",
+     "components": [
+      "client_tool",
+      "memory",
+      "memory"
+     ],
+     "S": 0.6204,
+     "dS": 0.2315,
+     "dC": 0.106,
+     "admissible": true,
+     "reason": "admissible: gain +0.2315 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +22.5573 > 0 (nu=2)"
+    }
+   ],
+   "winner": "gepa-r0",
+   "confirm": {
+    "n": 48,
+    "cand": 0.6736,
+    "ctrl": 0.3611,
+    "lift": 0.3125,
+    "z": 5.22,
+    "z_min": 1.64,
+    "min_lift": 0.03
+   },
+   "promoted": true,
+   "rolled_back": false,
+   "canary": {
+    "new": 0.6597,
+    "old": 0.4444,
+    "lift": 0.2153
+   },
+   "secs": 1.56
+  },
+  {
+   "round": 1,
+   "champion_v": 2,
+   "champion_S": 0.713,
+   "champion_families": {
+    "caesar3": 0.556,
+    "count_vowels": 0.944,
+    "digit_sum": 0.444,
+    "reverse": 1.0,
+    "sort_words": 0.944,
+    "upper_vowels": 0.389
+   },
+   "delta": 0.2363,
+   "S_star": 0.6759,
+   "stalled": false,
+   "candidates": [
+    {
+     "variant": "struct-r1#0",
+     "source": "structural",
+     "components": [
+      "memory",
+      "client_tool",
+      "client_tool"
+     ],
+     "S": 0.7778,
+     "dS": 0.0648,
+     "dC": 0.018,
+     "admissible": true,
+     "reason": "admissible: gain +0.0648 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +7.2183 > 0 (nu=2)"
+    },
+    {
+     "variant": "struct-r1#1",
+     "source": "structural",
+     "components": [
+      "client_tool",
+      "client_tool",
+      "client_tool"
+     ],
+     "S": 0.8241,
+     "dS": 0.1111,
+     "dC": 0.001,
+     "admissible": true,
+     "reason": "admissible: gain +0.1111 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +11.5922 > 0 (nu=1)"
+    }
+   ],
+   "winner": "struct-r1#1",
+   "confirm": {
+    "n": 48,
+    "cand": 0.7847,
+    "ctrl": 0.6944,
+    "lift": 0.0903,
+    "z": 2.78,
+    "z_min": 1.64,
+    "min_lift": 0.03
+   },
+   "promoted": true,
+   "rolled_back": false,
+   "canary": {
+    "new": 0.8056,
+    "old": 0.6736,
+    "lift": 0.1319
+   },
+   "secs": 2.72
+  },
+  {
+   "round": 2,
+   "champion_v": 3,
+   "champion_S": 0.8333,
+   "champion_families": {
+    "caesar3": 0.611,
+    "count_vowels": 1.0,
+    "digit_sum": 0.889,
+    "reverse": 0.944,
+    "sort_words": 0.944,
+    "upper_vowels": 0.611
+   },
+   "delta": 0.2363,
+   "S_star": 0.8241,
+   "stalled": false,
+   "candidates": [
+    {
+     "variant": "struct-r2#0",
+     "source": "structural",
+     "components": [
+      "client_tool",
+      "subagent",
+      "memory"
+     ],
+     "S": 0.9167,
+     "dS": 0.0833,
+     "dC": 0.26,
+     "admissible": true,
+     "reason": "admissible: gain +0.0833 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +5.4374 > 0 (nu=2)"
+    },
+    {
+     "variant": "struct-r2#1",
+     "source": "structural",
+     "components": [
+      "memory",
+      "memory",
+      "client_tool"
+     ],
+     "S": 0.9074,
+     "dS": 0.0741,
+     "dC": 0.087,
+     "admissible": true,
+     "reason": "admissible: gain +0.0741 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +6.6055 > 0 (nu=1)"
+    }
+   ],
+   "winner": "struct-r2#0",
+   "confirm": {
+    "n": 48,
+    "cand": 0.9097,
+    "ctrl": 0.8542,
+    "lift": 0.0556,
+    "z": 1.74,
+    "z_min": 1.64,
+    "min_lift": 0.03
+   },
+   "promoted": true,
+   "rolled_back": false,
+   "canary": {
+    "new": 0.9028,
+    "old": 0.8542,
+    "lift": 0.0486
+   },
+   "secs": 3.74
+  },
+  {
+   "round": 3,
+   "champion_v": 4,
+   "champion_S": 0.8519,
+   "champion_families": {
+    "caesar3": 0.722,
+    "count_vowels": 0.889,
+    "digit_sum": 0.778,
+    "reverse": 1.0,
+    "sort_words": 0.944,
+    "upper_vowels": 0.778
+   },
+   "delta": 0.2363,
+   "S_star": 0.9167,
+   "stalled": false,
+   "candidates": [
+    {
+     "variant": "gepa-r3",
+     "source": "gepa",
+     "components": [
+      "prompt"
+     ],
+     "S": 0.8796,
+     "dS": 0.0278,
+     "dC": 0.304,
+     "admissible": false,
+     "reason": "cost rule failed: gain +0.0278 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -1.7833 <= 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r3#0",
+     "source": "structural",
+     "components": [
+      "subagent",
+      "memory",
+      "memory"
+     ],
+     "S": 0.9352,
+     "dS": 0.0833,
+     "dC": 0.849,
+     "admissible": false,
+     "reason": "cost rule failed: gain +0.0833 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -4.4091 <= 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r3#1",
+     "source": "structural",
+     "components": [
+      "memory",
+      "memory",
+      "client_tool"
+     ],
+     "S": 0.8611,
+     "dS": 0.0093,
+     "dC": 0.002,
+     "admissible": true,
+     "reason": "admissible: gain +0.0093 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +0.9016 > 0 (nu=0)"
+    }
+   ],
+   "winner": "struct-r3#1",
+   "confirm": {
+    "n": 48,
+    "cand": 0.9167,
+    "ctrl": 0.8611,
+    "lift": 0.0556,
+    "z": 1.53,
+    "z_min": 1.64,
+    "min_lift": 0.03
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "notes": [
+    "\u21a9 descartado (rollback): struct-r3#1 n\u00e3o passou na confirma\u00e7\u00e3o"
+   ],
+   "secs": 1.41
+  },
+  {
+   "round": 4,
+   "champion_v": 4,
+   "champion_S": 0.8426,
+   "champion_families": {
+    "caesar3": 0.722,
+    "count_vowels": 0.944,
+    "digit_sum": 0.611,
+    "reverse": 1.0,
+    "sort_words": 0.944,
+    "upper_vowels": 0.833
+   },
+   "delta": 0.2363,
+   "S_star": 0.9167,
+   "stalled": false,
+   "candidates": [
+    {
+     "variant": "struct-r4#0",
+     "source": "structural",
+     "components": [
+      "memory",
+      "control_flow"
+     ],
+     "S": 0.9167,
+     "dS": 0.0741,
+     "dC": 0.175,
+     "admissible": true,
+     "reason": "admissible: gain +0.0741 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +4.7802 > 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r4#1",
+     "source": "structural",
+     "components": [
+      "config",
+      "subagent"
+     ],
+     "S": 0.8981,
+     "dS": 0.0556,
+     "dC": 0.861,
+     "admissible": false,
+     "reason": "cost rule failed: gain +0.0556 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -7.3535 <= 0 (nu=0)"
+    }
+   ],
+   "winner": "struct-r4#0",
+   "confirm": {
+    "n": 48,
+    "cand": 0.9514,
+    "ctrl": 0.8819,
+    "lift": 0.0694,
+    "z": 3.14,
+    "z_min": 1.64,
+    "min_lift": 0.03
+   },
+   "promoted": true,
+   "rolled_back": false,
+   "canary": {
+    "new": 0.9167,
+    "old": 0.7986,
+    "lift": 0.1181
+   },
+   "secs": 4.41
+  },
+  {
+   "round": 5,
+   "champion_v": 6,
+   "champion_S": 0.9167,
+   "champion_families": {
+    "caesar3": 0.833,
+    "count_vowels": 1.0,
+    "digit_sum": 0.944,
+    "reverse": 1.0,
+    "sort_words": 0.944,
+    "upper_vowels": 0.778
+   },
+   "delta": 0.2363,
+   "S_star": 0.9167,
+   "stalled": false,
+   "candidates": [
+    {
+     "variant": "gepa-r5",
+     "source": "gepa",
+     "components": [
+      "prompt"
+     ],
+     "S": 0.9167,
+     "dS": 0.0,
+     "dC": 0.096,
+     "admissible": false,
+     "reason": "cost rule failed: gain +0.0000 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -1.4404 <= 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r5#0",
+     "source": "structural",
+     "components": [
+      "subagent",
+      "memory"
+     ],
+     "S": 0.8426,
+     "dS": -0.0741,
+     "dC": 0.121,
+     "admissible": false,
+     "reason": "cost rule failed: gain -0.0741 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -9.2163 <= 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r5#1",
+     "source": "structural",
+     "components": [
+      "subagent",
+      "memory"
+     ],
+     "S": 0.8981,
+     "dS": -0.0185,
+     "dC": 0.823,
+     "admissible": false,
+     "reason": "cost rule failed: gain -0.0185 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -14.1930 <= 0 (nu=0)"
+    }
+   ],
+   "winner": null,
+   "confirm": null,
+   "promoted": false,
+   "rolled_back": false,
+   "secs": 1.05
+  },
+  {
+   "round": 6,
+   "champion_v": 6,
+   "champion_S": 0.9259,
+   "champion_families": {
+    "caesar3": 0.778,
+    "count_vowels": 1.0,
+    "digit_sum": 1.0,
+    "reverse": 1.0,
+    "sort_words": 0.889,
+    "upper_vowels": 0.889
+   },
+   "delta": 0.2363,
+   "S_star": 0.9167,
+   "stalled": false,
+   "candidates": [
+    {
+     "variant": "gepa-r6",
+     "source": "gepa",
+     "components": [
+      "prompt"
+     ],
+     "S": 0.8981,
+     "dS": -0.0278,
+     "dC": 0.101,
+     "admissible": false,
+     "reason": "cost rule failed: gain -0.0278 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -4.2961 <= 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r6#0",
+     "source": "structural",
+     "components": [
+      "memory",
+      "client_tool"
+     ],
+     "S": 0.9259,
+     "dS": 0.0,
+     "dC": -0.066,
+     "admissible": true,
+     "reason": "admissible: gain +0.0000 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +0.9856 > 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r6#1",
+     "source": "structural",
+     "components": [
+      "client_tool",
+      "memory"
+     ],
+     "S": 0.9444,
+     "dS": 0.0185,
+     "dC": -0.038,
+     "admissible": true,
+     "reason": "admissible: gain +0.0185 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +2.4151 > 0 (nu=0)"
+    }
+   ],
+   "winner": "struct-r6#1",
+   "confirm": {
+    "n": 48,
+    "cand": 0.9028,
+    "ctrl": 0.9028,
+    "lift": 0.0,
+    "z": 0.0,
+    "z_min": 1.64,
+    "min_lift": 0.03
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "notes": [
+    "\u21a9 descartado (rollback): struct-r6#1 n\u00e3o passou na confirma\u00e7\u00e3o"
+   ],
+   "secs": 3.4
+  },
+  {
+   "round": 7,
+   "champion_v": 6,
+   "champion_S": 0.8981,
+   "champion_families": {
+    "caesar3": 0.833,
+    "count_vowels": 0.944,
+    "digit_sum": 1.0,
+    "reverse": 0.944,
+    "sort_words": 1.0,
+    "upper_vowels": 0.667
+   },
+   "delta": 0.2363,
+   "S_star": 0.9167,
+   "stalled": true,
+   "candidates": [
+    {
+     "variant": "gepa-r7",
+     "source": "gepa",
+     "components": [
+      "prompt"
+     ],
+     "S": 0.9167,
+     "dS": 0.0185,
+     "dC": 0.087,
+     "admissible": true,
+     "reason": "admissible: gain +0.0185 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +0.5420 > 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r7#0",
+     "source": "structural",
+     "components": [
+      "memory",
+      "memory"
+     ],
+     "S": 0.9352,
+     "dS": 0.037,
+     "dC": 0.04,
+     "admissible": true,
+     "reason": "admissible: gain +0.0370 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +3.1087 > 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r7#1",
+     "source": "structural",
+     "components": [
+      "config",
+      "subagent"
+     ],
+     "S": 0.8611,
+     "dS": -0.037,
+     "dC": 0.155,
+     "admissible": false,
+     "reason": "cost rule failed: gain -0.0370 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = -6.0307 <= 0 (nu=0)"
+    },
+    {
+     "variant": "struct-r7#2-explore",
+     "source": "structural",
+     "components": [
+      "client_tool"
+     ],
+     "S": 0.9074,
+     "dS": 0.0093,
+     "dC": -0.233,
+     "admissible": true,
+     "reason": "admissible: gain +0.0093 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*nu = +4.4254 > 0 (nu=0)"
+    }
+   ],
+   "winner": "struct-r7#0",
+   "confirm": {
+    "n": 48,
+    "cand": 0.9375,
+    "ctrl": 0.9097,
+    "lift": 0.0278,
+    "z": 1.43,
+    "z_min": 1.64,
+    "min_lift": 0.03
+   },
+   "promoted": false,
+   "rolled_back": false,
+   "notes": [
+    "\u21a9 descartado (rollback): struct-r7#0 n\u00e3o passou na confirma\u00e7\u00e3o"
+   ],
+   "secs": 1.45
+  }
+ ],
+ "stop_reason": "rounds esgotados",
+ "final": {
+  "evolve_fresh": {
+   "seed_S": 0.4267,
+   "champion_S": 0.8967,
+   "lift": 0.47,
+   "z": 13.23,
+   "champion_families": {
+    "caesar3": 0.86,
+    "count_vowels": 0.94,
+    "digit_sum": 0.94,
+    "reverse": 0.96,
+    "sort_words": 0.84,
+    "upper_vowels": 0.84
+   },
+   "verifier_pass_champion": 0.9933,
+   "goodhart_gap": 0.0967,
+   "tokens_per_trial": {
+    "seed": 154.9,
+    "champion": 596.1
+   }
+  },
+  "ood_test": {
+   "seed_S": 0.36,
+   "champion_S": 0.4,
+   "lift": 0.04,
+   "z": 0.59,
+   "champion_families": {
+    "dedupe_words": 0.4,
+    "longest_word": 0.4
+   },
+   "verifier_pass_champion": 0.99,
+   "goodhart_gap": 0.59,
+   "tokens_per_trial": {
+    "seed": 156.9,
+    "champion": 862.7
+   }
+  }
+ },
+ "llm_calls": {
+  "planner": 7745,
+  "policy": 8801,
+  "reflect": 43,
+  "forger": 18,
+  "judge": 18,
+  "qa": 575,
+  "architect": 3,
+  "delegate": 5220,
+  "router": 1605
+ },
+ "llm_tokens": {
+  "planner": 1093354,
+  "policy": 1714564,
+  "reflect": 14181,
+  "forger": 5498,
+  "judge": 1537,
+  "qa": 127133,
+  "architect": 930,
+  "delegate": 888387,
+  "router": 488044
+ },
+ "episodes": 9496,
+ "sandbox_spawns": 252,
+ "isolation": {
+  "name": "namespaces",
+  "level": 1,
+  "verified_here": true
+ },
+ "memory_backend": "vector:concept-sim/brute",
+ "champion_subagents": [
+  "spec_upper__caesar"
+ ],
+ "champion_config": {
+  "max_retries": 1,
+  "use_tools": true,
+  "use_planner": true,
+  "memory_k": 2,
+  "forge_on_demand": false,
+  "router_mode": "hybrid",
+  "orchestrate": true,
+  "qa_agent": false
+ },
+ "forge_rejections": {},
+ "registry": [
+  {
+   "ts": 1790838759.5416505,
+   "v": 1,
+   "event": "registered",
+   "why": "seed"
+  },
+  {
+   "ts": 1790838759.543164,
+   "v": 1,
+   "event": "promoted",
+   "why": "seed"
+  },
+  {
+   "ts": 1790838761.1651366,
+   "v": 2,
+   "event": "registered",
+   "why": "gepa-r0"
+  },
+  {
+   "ts": 1790838761.166998,
+   "v": 2,
+   "event": "promoted",
+   "why": "gates ok"
+  },
+  {
+   "ts": 1790838763.0051124,
+   "v": 3,
+   "event": "registered",
+   "why": "struct-r1#1"
+  },
+  {
+   "ts": 1790838763.0096955,
+   "v": 3,
+   "event": "promoted",
+   "why": "gates ok"
+  },
+  {
+   "ts": 1790838766.1957624,
+   "v": 4,
+   "event": "registered",
+   "why": "struct-r2#0"
+  },
+  {
+   "ts": 1790838766.197284,
+   "v": 4,
+   "event": "promoted",
+   "why": "gates ok"
+  },
+  {
+   "ts": 1790838769.0825014,
+   "v": 5,
+   "event": "registered",
+   "why": "descartado na confirma\u00e7\u00e3o"
+  },
+  {
+   "ts": 1790838769.0837584,
+   "v": 5,
+   "event": "rejected",
+   "why": "{\"n\": 48, \"cand\": 0.9167, \"ctrl\": 0.8611, \"lift\": 0.0556, \"z\": 1.53, \"z_min\": 1.64, \"min_lift\": 0.03}"
+  },
+  {
+   "ts": 1790838772.0608094,
+   "v": 6,
+   "event": "registered",
+   "why": "struct-r4#0"
+  },
+  {
+   "ts": 1790838772.0633528,
+   "v": 6,
+   "event": "promoted",
+   "why": "gates ok"
+  },
+  {
+   "ts": 1790838777.9445543,
+   "v": 7,
+   "event": "registered",
+   "why": "descartado na confirma\u00e7\u00e3o"
+  },
+  {
+   "ts": 1790838777.946081,
+   "v": 7,
+   "event": "rejected",
+   "why": "{\"n\": 48, \"cand\": 0.9028, \"ctrl\": 0.9028, \"lift\": 0.0, \"z\": 0.0, \"z_min\": 1.64, \"min_lift\": 0.03}"
+  },
+  {
+   "ts": 1790838779.3882782,
+   "v": 8,
+   "event": "registered",
+   "why": "descartado na confirma\u00e7\u00e3o"
+  },
+  {
+   "ts": 1790838779.3947325,
+   "v": 8,
+   "event": "rejected",
+   "why": "{\"n\": 48, \"cand\": 0.9375, \"ctrl\": 0.9097, \"lift\": 0.0278, \"z\": 1.43, \"z_min\": 1.64, \"min_lift\": 0.03}"
+  }
+ ],
+ "memory_lessons": 2,
+ "honestidade": "LLM=sim. Com SimLLM os ganhos validam o MECANISMO do ciclo (propor->testar->promover/reverter), n\u00e3o capacidade real. Verificador propositalmente fraco; or\u00e1culo estrito s\u00f3 no avaliador. Sandbox = defesa em profundidade, n\u00e3o fronteira de seguran\u00e7a."
+}
