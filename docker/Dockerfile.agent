@@ -1,0 +1,12 @@
+# Imagem do ambiente do agente (NÃO testada neste repositório: sem docker na máquina de desenvolvimento).
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive DISPLAY=:1
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip git curl jq ca-certificates \
+      xvfb xdotool scrot x11-utils openbox firefox-esr 2>/dev/null || apt-get install -y --no-install-recommends python3 git curl jq xvfb xdotool scrot \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -m -u 1000 agent && mkdir -p /workspace && chown agent /workspace
+USER agent
+WORKDIR /workspace
+# display virtual 1280x800, iniciado sob demanda por `docker exec` (xdotool/scrot usam DISPLAY=:1)
+RUN printf '#!/bin/sh\npgrep Xvfb >/dev/null || (Xvfb :1 -screen 0 1280x800x24 >/dev/null 2>&1 &)\nexec "$@"\n' > /home/agent/with-display.sh && chmod +x /home/agent/with-display.sh
+CMD ["sleep", "infinity"]

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Evoloop</title>
+  <style>
+    :root{--bg:#0b0d10;--panel:#12161b;--soft:#1b222a;--line:#27313b;--text:#ecf2f8;--muted:#98a7b7;--brand:#71e6b1;--danger:#ff8585}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,sans-serif}
+    .app{height:100vh;display:grid;grid-template-columns:260px 1fr}.side{border-right:1px solid var(--line);padding:24px 16px;background:var(--panel)}
+    .logo{font-weight:800;font-size:22px;letter-spacing:-.5px}.logo b{color:var(--brand)}.tag{color:var(--muted);font-size:12px;margin-bottom:28px}
+    button,.button{border:1px solid var(--line);background:var(--soft);color:var(--text);border-radius:10px;padding:10px 13px;cursor:pointer;font:inherit}
+    button:hover{border-color:var(--brand)}.new{width:100%;text-align:left}.status{position:absolute;bottom:20px;color:var(--muted);font-size:12px}
+    main{display:grid;grid-template-rows:58px 1fr auto;min-width:0}.top{display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid var(--line)}
+    .pill{font-size:12px;color:var(--brand);background:#11251c;border:1px solid #234936;border-radius:99px;padding:5px 10px}
+    #messages{overflow:auto;padding:32px max(20px,calc((100% - 820px)/2));scroll-behavior:smooth}.msg{margin:0 0 24px;white-space:pre-wrap;word-break:break-word}
+    .msg.user{margin-left:auto;background:var(--soft);padding:12px 16px;border-radius:16px;max-width:80%;width:max-content}.who{font-size:12px;color:var(--brand);font-weight:700;margin-bottom:5px}
+    .composer{padding:16px max(20px,calc((100% - 850px)/2)) 24px}.box{display:grid;grid-template-columns:1fr auto;gap:10px;border:1px solid var(--line);border-radius:16px;padding:10px;background:var(--panel)}
+    textarea{resize:none;border:0;outline:0;background:transparent;color:var(--text);font:inherit;min-height:54px;max-height:180px;padding:8px}.send{background:var(--brand);color:#07130d;font-weight:800;align-self:end}
+    .hint{text-align:center;color:var(--muted);font-size:11px;margin-top:8px}.error{color:var(--danger)}
+    @media(max-width:720px){.app{grid-template-columns:1fr}.side{display:none}.top{padding:0 14px}#messages{padding:20px 14px}.composer{padding:10px 12px}}
+  </style>
+</head>
+<body><div class="app">
+  <aside class="side"><div class="logo">Evo<b>loop</b></div><div class="tag">Assistente local e evolutivo</div><button class="new" onclick="newChat()">＋ Nova conversa</button><div class="status" id="status">● conectando…</div></aside>
+  <main><header class="top"><strong>Conversa local</strong><span class="pill">modelo local</span></header>
+    <section id="messages"><div class="msg"><div class="who">Evoloop</div>Olá. Estou rodando localmente. Diga o que você quer fazer; comandos e arquivos são executados apenas no workspace configurado.</div></section>
+    <footer class="composer"><div class="box"><textarea id="input" placeholder="Envie uma mensagem…" autofocus></textarea><button class="send" id="send">Enviar</button></div><div class="hint">Revise ações importantes. O Evoloop pode cometer erros.</div></footer>
+  </main>
+</div><script>
+  const token=new URLSearchParams(location.search).get('token')||sessionStorage.getItem('evoloop-token')||'';
+  if(token){sessionStorage.setItem('evoloop-token',token);history.replaceState({},'',location.pathname)}
+  const messages=[], el=document.querySelector('#messages'), input=document.querySelector('#input'), send=document.querySelector('#send');
+  function add(role,text,cls=''){const d=document.createElement('div');d.className='msg '+(role==='user'?'user ':'')+cls;const w=document.createElement('div');w.className='who';w.textContent=role==='user'?'Você':'Evoloop';const b=document.createElement('div');b.textContent=text;d.append(w,b);el.append(d);el.scrollTop=el.scrollHeight;return b}
+  function newChat(){messages.length=0;el.innerHTML='';add('assistant','Nova conversa iniciada. Como posso ajudar?')}
+  async function submit(){const text=input.value.trim();if(!text||send.disabled)return;input.value='';messages.push({role:'user',content:text});add('user',text);const out=add('assistant','Pensando…');send.disabled=true;
+    try{const r=await fetch('/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({model:'evoloop',messages,stream:false})});const data=await r.json();if(!r.ok)throw new Error(data.error?.message||'HTTP '+r.status);const answer=data.choices[0].message.content;out.textContent=answer;messages.push({role:'assistant',content:answer})}catch(e){out.textContent='Erro: '+e.message;out.parentElement.classList.add('error')}finally{send.disabled=false;input.focus();el.scrollTop=el.scrollHeight}}
+  send.onclick=submit;input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submit()}});
+  fetch('/healthz').then(r=>r.json()).then(()=>document.querySelector('#status').textContent='● serviço ativo').catch(()=>document.querySelector('#status').textContent='● desconectado');
+</script></body></html>

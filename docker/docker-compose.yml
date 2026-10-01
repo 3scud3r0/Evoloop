@@ -1,0 +1,14 @@
+# Open WebUI -> EVOLOOP (rodando NO HOST). Dentro do contêiner, "localhost" é o próprio contêiner: use host.docker.internal.
+# O EVOLOOP precisa escutar numa interface alcançável pelo contêiner:  evoloop serve --host 0.0.0.0 --api-key SUA_CHAVE  (proteja a porta 8000 com firewall!)
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports: ["3000:8080"]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    environment:
+      OPENAI_API_BASE_URL: http://host.docker.internal:8000/v1
+      OPENAI_API_KEY: ${EVOLOOP_API_KEY:?defina EVOLOOP_API_KEY}
+      ENABLE_OLLAMA_API: "false"
+    volumes: ["open-webui:/app/backend/data"]
+volumes:
+  open-webui:

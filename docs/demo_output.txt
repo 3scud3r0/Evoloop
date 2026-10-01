@@ -1,0 +1,47 @@
+▛▀▀ EVOLOOP ▀▀▜  seed=1 rounds=8 llm=sim chaos=False
+baseline S=0.389  δ(ruído)=0.236 calibrado em [0.352, 0.454, 0.259, 0.528, 0.481, 0.398, 0.435, 0.454]
+[round 0] campeão v1 S=0.389  δ=0.236 S*=0.389
+   ok gepa-r0                S=0.676 ΔS=  0.287 ['prompt']  admissible: gain +0.2870 > delta 0.2363; cost change +1.484 <= budget 11.581 (
+   x  struct-r0#0            S=0.417 ΔS= 0.0278 ['subagent', 'client_tool', 'client_tool']  cost rule failed: gain +0.0278 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   ok struct-r0#1            S=0.620 ΔS= 0.2315 ['client_tool', 'memory', 'memory']  admissible: gain +0.2315 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ▶ vencedor gepa-r0  confirmação: lift=+0.312 z=5.22 (mín 1.64) → PROMOVIDO
+[round 1] campeão v2 S=0.713  δ=0.236 S*=0.676
+   ok struct-r1#0            S=0.778 ΔS= 0.0648 ['memory', 'client_tool', 'client_tool']  admissible: gain +0.0648 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ok struct-r1#1            S=0.824 ΔS= 0.1111 ['client_tool', 'client_tool', 'client_tool']  admissible: gain +0.1111 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ▶ vencedor struct-r1#1  confirmação: lift=+0.090 z=2.78 (mín 1.64) → PROMOVIDO
+[round 2] campeão v3 S=0.833  δ=0.236 S*=0.824
+   ok struct-r2#0            S=0.917 ΔS= 0.0833 ['client_tool', 'subagent', 'memory']  admissible: gain +0.0833 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ok struct-r2#1            S=0.907 ΔS= 0.0741 ['memory', 'memory', 'client_tool']  admissible: gain +0.0741 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ▶ vencedor struct-r2#0  confirmação: lift=+0.056 z=1.74 (mín 1.64) → PROMOVIDO
+[round 3] campeão v4 S=0.852  δ=0.236 S*=0.917
+   x  gepa-r3                S=0.880 ΔS= 0.0278 ['prompt']  cost rule failed: gain +0.0278 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   x  struct-r3#0            S=0.935 ΔS= 0.0833 ['subagent', 'memory', 'memory']  cost rule failed: gain +0.0833 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   ok struct-r3#1            S=0.861 ΔS= 0.0093 ['memory', 'memory', 'client_tool']  admissible: gain +0.0093 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ▶ vencedor struct-r3#1  confirmação: lift=+0.056 z=1.53 (mín 1.64) → não promovido
+   ↩ descartado (rollback): struct-r3#1 não passou na confirmação
+[round 4] campeão v4 S=0.843  δ=0.236 S*=0.917
+   ok struct-r4#0            S=0.917 ΔS= 0.0741 ['memory', 'control_flow']  admissible: gain +0.0741 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   x  struct-r4#1            S=0.898 ΔS= 0.0556 ['config', 'subagent']  cost rule failed: gain +0.0556 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   ▶ vencedor struct-r4#0  confirmação: lift=+0.069 z=3.14 (mín 1.64) → PROMOVIDO
+[round 5] campeão v6 S=0.917  δ=0.236 S*=0.917
+   x  gepa-r5                S=0.917 ΔS=    0.0 ['prompt']  cost rule failed: gain +0.0000 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   x  struct-r5#0            S=0.843 ΔS=-0.0741 ['subagent', 'memory']  cost rule failed: gain -0.0741 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   x  struct-r5#1            S=0.898 ΔS=-0.0185 ['subagent', 'memory']  cost rule failed: gain -0.0185 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   (nenhum candidato admissível — campeão mantido)
+[round 6] campeão v6 S=0.926  δ=0.236 S*=0.917
+   x  gepa-r6                S=0.898 ΔS=-0.0278 ['prompt']  cost rule failed: gain -0.0278 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   ok struct-r6#0            S=0.926 ΔS=    0.0 ['memory', 'client_tool']  admissible: gain +0.0000 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ok struct-r6#1            S=0.944 ΔS= 0.0185 ['client_tool', 'memory']  admissible: gain +0.0185 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ▶ vencedor struct-r6#1  confirmação: lift=+0.000 z=0.0 (mín 1.64) → não promovido
+   ↩ descartado (rollback): struct-r6#1 não passou na confirmação
+[round 7] campeão v6 S=0.898  δ=0.236 S*=0.917 ESTAGNADO→explora
+   ok gepa-r7                S=0.917 ΔS= 0.0185 ['prompt']  admissible: gain +0.0185 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ok struct-r7#0            S=0.935 ΔS=  0.037 ['memory', 'memory']  admissible: gain +0.0370 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   x  struct-r7#1            S=0.861 ΔS= -0.037 ['config', 'subagent']  cost rule failed: gain -0.0370 within delta 0.2363; shaped 100.0*dS - 15.0*dC
+   ok struct-r7#2-explore    S=0.907 ΔS= 0.0093 ['client_tool']  admissible: gain +0.0093 within delta 0.2363; shaped 100.0*dS - 15.0*dC + 0.5*
+   ▶ vencedor struct-r7#0  confirmação: lift=+0.028 z=1.43 (mín 1.64) → não promovido
+   ↩ descartado (rollback): struct-r7#0 não passou na confirmação
+FINAL evolve_fresh  seed=0.427 → campeão=0.897  lift=+0.470 z=13.23  verif-pass=0.99 gap-Goodhart=+0.10
+FINAL ood_test      seed=0.360 → campeão=0.400  lift=+0.040 z=0.59  verif-pass=0.99 gap-Goodhart=+0.59
+chamadas LLM {'planner': 7745, 'policy': 8801, 'reflect': 43, 'forger': 18, 'judge': 18, 'qa': 575, 'architect': 3, 'delegate': 5220, 'router': 1605} · episódios 9496 · rejeições forge {}
+⚠ LLM=sim. Com SimLLM os ganhos validam o MECANISMO do ciclo (propor->testar->promover/reverter), não capacidade real. Verificador propositalmente fraco; oráculo estrito só no avaliador. Sandbox = defesa em profundidade, não fronteira de segurança.
